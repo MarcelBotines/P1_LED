@@ -9,7 +9,7 @@
 ### Procedimiento:  
 **Codigo:**
 ```cpp
-    #define LED_BUILTIN 23
+    #define LED_BUILTIN 2
     #define DELAY 500
 
     void setup()
