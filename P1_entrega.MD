@@ -36,20 +36,24 @@ Este código enciende y apaga el LED integrado en un intervalo de medio segundo,
 ### Sin delay: 
 **Código:**
 ```cpp
-    #define LED_BUILTIN 23
-    #define DELAY 500
-    void setup()
-    {
-        Serial.begin(115200); 
-        pinMode(LED_BUILTIN, OUTPUT);
-    }
-    void loop()
-    {
-        digitalWrite(LED_BUILTIN, HIGH); 
-        Serial.println("ON"); 
-        digitalWrite(LED_BUILTIN, LOW); 
-        Serial.println("OFF");     
-    }
+#include <Arduino.h>
+
+#define LED_BUILTIN 2
+#define DELAY 1000 //ms
+
+void setup() {
+  Serial.begin(115200); // Inicialitza la comunicació sèrie entre l'Arduino i un altre dispositiu.
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  Serial.println("ON");
+  delay(DELAY);
+  digitalWrite(LED_BUILTIN, LOW);
+  Serial.println("OFF");
+  delay(DELAY);
+}
 ```
 ### Código sin delay:
 
