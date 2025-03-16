@@ -58,78 +58,85 @@ void loop() {
 ### Código sin delay:
 
 **Descripcion:** <br>
-En este código, la LED se encenderá y se apagará repetidamente sin ninún tipo de separación temporal porque hemos quitado los delay del código anterior.
+En este código, la LED se encenderá y se apagará repetidamente sin ningún tipo de separación temporal porque hemos quitado los delay del código anterior.
 
 ### Modificar la salida a uno cualquiera de los que estan disponibles y medir con el osciloscopio la máxima frecuencia de apagado y encendido que permite el microcontrolador:
 ### 4 códigos: 
 - **Envio por el puerto série del mensaje i utilizando funciones de Arduino**
 ```cpp
    #include <Arduino.h>
-   #define LED_BUILTIN 23
-   void setup() {                
-      pinMode(LED_BUILTIN, OUTPUT);   
-      Serial.begin(115200);
-   }
-   void loop() {
-      Serial.println("ON");
-      digitalWrite(LED_BUILTIN, HIGH);
-      Serial.println("OFF");      
-      digitalWrite(LED_BUILTIN, LOW);
-   }
+
+int led = 2;
+
+void setup() {                
+  pinMode(led, OUTPUT);   
+  Serial.begin(115200);
+}
+
+void loop() {
+  Serial.println("ON");
+  digitalWrite(led, HIGH);
+  Serial.println("OFF");      
+  digitalWrite(led, LOW);
+}
    ```
-Frecuencias: 33,8us o 29,6khz .
+Frecuencia: 18.06 kHz..
 
 - **Envio por el puerto série y accediendo directamente a los registros:**
 ```cpp
-    #include <Arduino.h>
-    #define LED_BUILTIN 23
-    uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
-    void setup() {                
-        pinMode(LED_BUILTIN, OUTPUT);   
-        Serial.begin(115200);
-    }
-    void loop() {
-        Serial.println("ON");
-        *gpio_out |= (1 << LED_BUILTIN);
-        Serial.println("OFF");      
-        *gpio_out ^= (1 << LED_BUILTIN);
-    }
+#include <Arduino.h>
+
+int led = 2;
+uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
+
+void setup() {                
+  pinMode(led, OUTPUT);   
+  Serial.begin(115200);
+}
+
+void loop() {
+  Serial.println("ON");
+  *gpio_out |= (1 << led);
+  Serial.println("OFF");      
+  *gpio_out ^= (1 << led);
+}
 ```
-Frecuencias: 34us o 29.1khz
+Frecuencia: 18.47 kHz
 
  - **Sin envio por el puerto série del mensaje i utilizando funciones de Arduino:**
 ```cpp
-    #include <Arduino.h>
-    #define LED_BUILTIN 23
+#include <Arduino.h>
 
-    void setup() {                
-    pinMode(LED_BUILTIN, OUTPUT);   
-    }
+int led = 2;
 
-    void loop() {
-    digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(LED_BUILTIN, LOW);
-    }
+void setup() {                
+  pinMode(led, OUTPUT);   
+}
+
+void loop() {
+  digitalWrite(led, HIGH);
+  digitalWrite(led, LOW);
+}
    ```
-Frecuencias: 571ns o 1.80Mhz
+Frecuencia: 3.13 MHz
 
  - **Sin envio por el puerto série y accediendo directamente a los registros:**
 ```cpp
-    #include <Arduino.h>
+#include <Arduino.h>
 
-    #define LED_BUILTIN 23
-    uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
+int led = 2;
+uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
 
-    void setup() {                
-    pinMode(LED_BUILTIN, OUTPUT);   
-    }
+void setup() {                
+  pinMode(led, OUTPUT);   
+}
 
-    void loop() {
-    *gpio_out |= (1 << LED_BUILTIN);
-    *gpio_out ^= (1 << LED_BUILTIN);
-    }
+void loop() {
+  *gpio_out |= (1 << led);
+  *gpio_out ^= (1 << led);
+}
 ```
-Frecuencia: 206ns o 4.69Mhz.
+Frecuencia: 10.20 MHz.
 
 ### Diagramas del código con delay:
 
