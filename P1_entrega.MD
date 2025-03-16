@@ -39,7 +39,7 @@ Este código enciende y apaga el LED integrado en un intervalo de medio segundo,
 #include <Arduino.h>
 
 #define LED_BUILTIN 2
-#define DELAY 1000 //ms
+#define DELAY 0 //ms
 
 void setup() {
   Serial.begin(115200); // Inicialitza la comunicació sèrie entre l'Arduino i un altre dispositiu.
